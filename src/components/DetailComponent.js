@@ -9,11 +9,13 @@ export default class DetailComponent extends Component {
 
 	constructor(props) {
 		super(props);
+		this.toggleFavorite = this.toggleFavorite.bind(this);
 		this.state = {
 			data: {
 				Name:'',
 				Address:''
 			},
+			favorite:false,
 			visible:false
 		}
 	}
@@ -24,7 +26,10 @@ export default class DetailComponent extends Component {
 					{visible?(
 						<div className="panel panel-default">
 						  <div className="panel-heading">
-						    <h3 className="panel-title">{data.Name}</h3>
+						    <h3  className="panel-title">
+						   		<span style={clickable} onClick={this.toggleFavorite} className={`glyphicon pull-right ${this.getStarClass()}`}></span>
+						    	<span style={title}>{data.Name} </span>
+						    </h3>
 						  </div>
 						  <div className="panel-body">
 						    {data.Address}
@@ -35,9 +40,22 @@ export default class DetailComponent extends Component {
 		);
 	}
 
+	getStarClass(){
+		return !this.state.favorite ? 'glyphicon-star-empty' :'glyphicon-star';
+	}
+
+	toggleFavorite() {
+		let newFavorite = !this.state.favorite;
+		this.setState({
+			favorite:newFavorite
+		})
+		this.props.parent.toggleFavorite(this.state.data, newFavorite);
+	}
+
 	setData(data) {
 		this.setState({
 			data: data,
+			favorite: data.favorite,
 			visible:true
 		});
 	}
@@ -50,5 +68,12 @@ export default class DetailComponent extends Component {
 }
 const searchStyle ={
 	marginTop: '10px'
+}
+const title ={
+	width: 'calc(100% - 20px)',
+	display: 'block'
+}
+const clickable={
+	cursor: 'pointer'
 }
 

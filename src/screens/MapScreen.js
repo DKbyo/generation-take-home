@@ -21,7 +21,6 @@ export default class MapComponent extends Component {
   }
   componentDidMount() {
     this.initMap();
-    this.initList();
   }
   render() {
     return (
@@ -49,15 +48,19 @@ export default class MapComponent extends Component {
     let marker = this.markers[data.Name];
     this.selectMarker(marker,data,true);
   }
-
+  toggleFavorite(data,favorite){
+    let store = this.directoryMap[data.Name];
+    store.favorite = favorite;
+  }
   selectMarker(marker,data,center){
+    let store = this.directoryMap[data.Name];
     if(this.lastMarker){
       this.lastMarker.setIcon({
         url: '/static/images/marker1.png',
         scaledSize:new google.maps.Size(30,30)
       });
     }
-    this.list.child.selectData(data);
+    this.list.child.selectData(store);
     marker.setIcon({
         url: '/static/images/marker2.png',
         scaledSize:new google.maps.Size(30,30)
@@ -82,7 +85,15 @@ export default class MapComponent extends Component {
     this.markers ={};
     this.directory = Object.values(Directory);
     this.directory = this.directory.slice(0,this.directory.length-1);
+    this.directory = this.directory.map((e)=>({
+      ...e,
+      searchName: e.Name.toLowerCase(),
+      searchAddress: e.Address.toLowerCase()
+    }));
+    
+    this.directoryMap = {};
     this.directory.forEach((d,index)=>{
+      
       let marker = new google.maps.Marker({
           position: {
             lat: d.Lat,
@@ -98,10 +109,8 @@ export default class MapComponent extends Component {
         this.selectMarker(marker,d);
       });
       this.markers[d.Name] = marker;
+      this.directoryMap[d.Name] = d;
     });
-  }
-  initList(){
-    
   }
 }
 

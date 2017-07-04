@@ -8,7 +8,9 @@ export default class HelpComponent extends Component {
 
 	render() {
 		return (
-			<button  data-toggle="modal" data-target="#modalHelp" style={buttonStyle} className="btn btn-primary"><span className="glyphicon glyphicon-question-sign"></span></button>
+			<div style={buttonStyle} >
+				<button   data-toggle="modal" data-target="#modalHelp"  className="btn btn-primary"><span className="glyphicon glyphicon-question-sign"></span></button>
+			</div>
 		);
 	}
 
@@ -16,4 +18,7 @@ export default class HelpComponent extends Component {
 const buttonStyle ={
 	marginTop: '10px',
 	marginRight: '10px'
+}
+const buttonMargin ={
+	marginRight:'10px'
 }
