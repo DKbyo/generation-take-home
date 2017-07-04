@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/DKbyo/generation-take-home.svg?branch=master)](https://travis-ci.org/DKbyo/generation-take-home)
+
 Generation Take-Home Coding Challenge
 =================================
 This is a take-home coding challenge used to help evaluate candidates
